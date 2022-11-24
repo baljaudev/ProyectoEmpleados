@@ -6,9 +6,9 @@ import java.sql.*;
 
 public class DBUtil {
     /**
-     * Created by ONUR BASKIRT on 22.02.2016.
+     * Creado por ONUR BASKIRT el 22.02.2016.
      */
-        //Declare JDBC Driver
+        //Declaramos el driver JDBC.
         private static final String JDBC_DRIVER = "oracle.jdbc.driver.OracleDriver";
 
         //Connection
@@ -19,10 +19,9 @@ public class DBUtil {
         //Username=HR, Password=HR, IP=localhost, IP=1521, SID=xe
         private static final String connStr = "jdbc:oracle:thin:HR/HR@localhost:1521/xe";
 
-
-        //Connect to DB
+        //Conectar a la base de datos.
         public static void dbConnect() throws SQLException, ClassNotFoundException {
-            //Setting Oracle JDBC Driver
+            //Configuramos el driver JDBC de Oracle.
             try {
                 Class.forName(JDBC_DRIVER);
             } catch (ClassNotFoundException e) {
@@ -33,7 +32,7 @@ public class DBUtil {
 
             System.out.println("Oracle JDBC Driver Registered!");
 
-            //Establish the Oracle Connection using Connection String
+            //Establecemos la conexión con Oracle usando la cadena de conexión.
             try {
                 conn = DriverManager.getConnection(connStr);
             } catch (SQLException e) {
@@ -43,7 +42,7 @@ public class DBUtil {
             }
         }
 
-        //Close Connection
+        //Cerramos la conexión con la base de datos.
         public static void dbDisconnect() throws SQLException {
             try {
                 if (conn != null && !conn.isClosed()) {
@@ -54,26 +53,26 @@ public class DBUtil {
             }
         }
 
-        //DB Execute Query Operation
+        //Base de datos, ejecutamos la Query.
         public static ResultSet dbExecuteQuery(String queryStmt) throws SQLException, ClassNotFoundException {
-            //Declare statement, resultSet and CachedResultSet as null
+            //Declaramos statement, resultSet y CachedResultSet como nulos.
             Statement stmt = null;
             ResultSet resultSet = null;
             CachedRowSetImpl crs = null;
             try {
-                //Connect to DB (Establish Oracle Connection)
+                //Conectamos a la base de datos. (Establecemos la conexión con Oracle).
                 dbConnect();
                 System.out.println("Select statement: " + queryStmt + "\n");
 
-                //Create statement
+                //Creamos el statement.
                 stmt = conn.createStatement();
 
-                //Execute select (query) operation
+                //Ejecutamos la select (query) operation.
                 resultSet = stmt.executeQuery(queryStmt);
 
-                //CachedRowSet Implementation
-                //In order to prevent "java.sql.SQLRecoverableException: Closed Connection: next" error
-                //We are using CachedRowSet
+                //CoachedRowSet Implementation
+                //Para evitar el error "java.sql.SQLRecoverableException: Closed Connection: next"
+                //Estamos usando CachedRowSet.
                 crs = new CachedRowSetImpl();
                 crs.populate(resultSet);
             } catch (SQLException e) {
@@ -81,30 +80,30 @@ public class DBUtil {
                 throw e;
             } finally {
                 if (resultSet != null) {
-                    //Close resultSet
+                    //Cerramos el resultSet.
                     resultSet.close();
                 }
                 if (stmt != null) {
-                    //Close Statement
+                    //Cerramos el statement.
                     stmt.close();
                 }
-                //Close connection
+                //Cerramos la conexión con la base de datos.
                 dbDisconnect();
             }
             //Return CachedRowSet
             return crs;
         }
 
-        //DB Execute Update (For Update/Insert/Delete) Operation
+        //Ejecutamos la Query de actualización (Update/Insert/Delete).
         public static void dbExecuteUpdate(String sqlStmt) throws SQLException, ClassNotFoundException {
-            //Declare statement as null
+            //Declaramos statement como nulo.
             Statement stmt = null;
             try {
-                //Connect to DB (Establish Oracle Connection)
+                //Conectamos a la base de datos. (Establecemos la conexión con Oracle).
                 dbConnect();
                 //Create Statement
                 stmt = conn.createStatement();
-                //Run executeUpdate operation with given sql statement
+                //Ejecutamos la operación executeUpdate con la sentencia sql dada.
                 stmt.executeUpdate(sqlStmt);
             } catch (SQLException e) {
                 System.out.println("Problem occurred at executeUpdate operation : " + e);
