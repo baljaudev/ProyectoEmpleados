@@ -21,7 +21,7 @@ public class Main extends Application {
         //1) Declaración del Stage principal que contendrá toda la app
         this.primaryStage = primaryStage;
         //Establecemos título de la aplicación
-        this.primaryStage.setTitle("Employees Management");
+        this.primaryStage.setTitle("Gestión empleados");
         //2) Método que inicia el root-layout
         initRootLayout();
         //3) Mostramos, sobre el root-layout, la  vista de las operaciones de empleados

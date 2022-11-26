@@ -40,7 +40,7 @@ public class EmployeeController {
     private TableColumn<Employee, String> empPhoneNumberColumn;
     @FXML
     private TableColumn<Employee, Date> empHireDateColumn;
-    //Search an employee
+    //Buscar empleado
     @FXML
     private void searchEmployee (ActionEvent actionEvent) throws ClassNotFoundException, SQLException {
         try {
