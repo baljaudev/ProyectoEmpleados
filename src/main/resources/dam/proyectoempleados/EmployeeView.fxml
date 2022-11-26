@@ -28,9 +28,9 @@
         <Label layoutX="270.0" layoutY="21.0" text="Nuevo Email" />
         <VBox layoutX="97.0" layoutY="24.0" spacing="4.0">
             <children>
-                <TextField fx:id="nameText" prefHeight="25.0" prefWidth="79.0" promptText="Name" />
-                <TextField fx:id="surnameText" prefHeight="25.0" prefWidth="79.0" promptText="Surname" />
-                <TextField fx:id="emailText" prefHeight="25.0" prefWidth="79.0" promptText="email" />
+                <TextField fx:id="nameText" prefHeight="25.0" prefWidth="79.0" promptText="Nombre" />
+                <TextField fx:id="surnameText" prefHeight="25.0" prefWidth="79.0" promptText="Apellido" />
+                <TextField fx:id="emailText" prefHeight="25.0" prefWidth="79.0" promptText="Email" />
             </children>
         </VBox>
         <VBox layoutX="9.0" layoutY="28.0" prefWidth="67.0" spacing="12.0">
