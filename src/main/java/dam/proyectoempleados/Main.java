@@ -51,7 +51,7 @@ public class Main extends Application {
         try {
             //Primero, carga la vista desde el fxml
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("EmployeeOperations.fxml"));
+            loader.setLocation(Main.class.getResource("EmployeeView.fxml"));
             //Establece el AnchorPane donde montamos toda la view
             AnchorPane employeeOperationsView = loader.load();
             //Establece el view en el centro del root-layout
