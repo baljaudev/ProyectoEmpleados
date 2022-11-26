@@ -76,7 +76,7 @@ public class DBUtil {
                 //CoachedRowSet Implementation
                 //Para evitar el error "java.sql.SQLRecoverableException: Closed Connection: next"
                 //Estamos usando CachedRowSet. //ESTO NO FUNCIONA
-                //Hemos cambiado el crs = new CachedRowSetImpl(); por la clase RowSetProvider de la linea 81
+                //Hemos cambiado el crs = new CachedRowSetImpl(); por la clase RowSetProvider de la linea 80
                 crs = RowSetProvider.newFactory().createCachedRowSet();
                 crs.populate(resultSet);
             } catch (SQLException e) {

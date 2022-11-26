@@ -45,9 +45,16 @@ public class EmployeeController {
     private void searchEmployee (ActionEvent actionEvent) throws ClassNotFoundException, SQLException {
         try {
             //Obtener información de Employee
-            Employee emp = EmployeeDAO.searchEmployee(empIdText.getText());
+
+            if (empIdText.getText() == null){
+                resultArea.setText("Campo id empleado vacio");
+            }else{
+                Employee emp = EmployeeDAO.searchEmployee(empIdText.getText());
+                populateAndShowEmployee(emp);
+
+            }
             //Rellenar el empleado en el TableView y mostrarlo en el TextArea
-            populateAndShowEmployee(emp);
+
         } catch (SQLException e) {
             e.printStackTrace();
             resultArea.setText("Error occurred while getting employee information from DB.\n" + e);
@@ -60,8 +67,13 @@ public class EmployeeController {
         try {
             //Obtenga toda la información de los empleados
             ObservableList<Employee> empData = EmployeeDAO.searchEmployees();
-            //Rellenar empleados TableView
-            populateEmployees(empData);
+            if (empData.isEmpty()){
+                resultArea.setText("Base de datos vacia");
+            }else{
+                //Rellenar empleados TableView
+                populateEmployees(empData);
+            }
+
         } catch (SQLException e){
             System.out.println("Error occurred while getting employees information from DB.\n" + e);
             throw e;
@@ -134,8 +146,13 @@ public class EmployeeController {
     @FXML
     private void insertEmployee (ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         try {
-            EmployeeDAO.insertEmp(nameText.getText(),surnameText.getText(),emailText.getText());
-            resultArea.setText("Employee inserted! \n");
+            if (nameText.getText().isBlank() || surnameText.getText().isBlank() || emailText.getText().isBlank()) {
+                resultArea.setText("Falta por rellenar un campo");
+            }else{
+                EmployeeDAO.insertEmp(nameText.getText(),surnameText.getText(),emailText.getText());
+                resultArea.setText("Employee inserted! \n");
+            }
+
         } catch (SQLException e) {
             resultArea.setText("Problem occurred while inserting employee " + e);
             throw e;
@@ -145,6 +162,7 @@ public class EmployeeController {
     @FXML
     private void deleteEmployee (ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         try {
+            //TODO borrar por fila marcada
             EmployeeDAO.deleteEmpWithId(empIdText.getText());
             resultArea.setText("Employee deleted! Employee id: " + empIdText.getText() + "\n");
         } catch (SQLException e) {
