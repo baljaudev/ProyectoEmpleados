@@ -10,6 +10,7 @@ module dam.proyectoempleados {
     exports dam.proyectoempleados.controller to javafx.fxml;
     exports dam.proyectoempleados.util;
     exports dam.proyectoempleados.model;
+    opens dam.proyectoempleados.util to javafx.fxml;
     opens dam.proyectoempleados.model to javafx.fxml;
     opens dam.proyectoempleados.controller to javafx.fxml;
 }

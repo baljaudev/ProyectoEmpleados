@@ -2,6 +2,9 @@ package dam.proyectoempleados.util;
 
 import com.sun.rowset.CachedRowSetImpl;
 
+
+import javax.sql.rowset.CachedRowSet;
+import javax.sql.rowset.RowSetProvider;
 import java.sql.*;
 
 public class DBUtil {
@@ -58,7 +61,7 @@ public class DBUtil {
             //Declaramos statement, resultSet y CachedResultSet como nulos.
             Statement stmt = null;
             ResultSet resultSet = null;
-            CachedRowSetImpl crs = null;
+            CachedRowSet crs;
             try {
                 //Conectamos a la base de datos. (Establecemos la conexión con Oracle).
                 dbConnect();
@@ -72,8 +75,9 @@ public class DBUtil {
 
                 //CoachedRowSet Implementation
                 //Para evitar el error "java.sql.SQLRecoverableException: Closed Connection: next"
-                //Estamos usando CachedRowSet.
-                crs = new CachedRowSetImpl();
+                //Estamos usando CachedRowSet. //ESTO NO FUNCIONA
+                //Hemos cambiado el crs = new CachedRowSetImpl(); por la clase RowSetProvider de la linea 81
+                crs = RowSetProvider.newFactory().createCachedRowSet();
                 crs.populate(resultSet);
             } catch (SQLException e) {
                 System.out.println("Problem occurred at executeQuery operation : " + e);
