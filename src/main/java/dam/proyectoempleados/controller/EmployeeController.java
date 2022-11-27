@@ -47,7 +47,7 @@ public class EmployeeController {
             //Obtener información de Employee
 
             if (empIdText.getText() == null){
-                resultArea.setText("Campo id empleado vacio");
+                resultArea.setText("Campo id empleado vacío");
             }else{
                 Employee emp = EmployeeDAO.searchEmployee(empIdText.getText());
                 populateAndShowEmployee(emp);
@@ -57,7 +57,7 @@ public class EmployeeController {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            resultArea.setText("Error occurred while getting employee information from DB.\n" + e);
+            resultArea.setText("Ha ocurrido un error al obtener la información de los empleados desde la BBDD.\n" + e);
             throw e;
         }
     }
@@ -68,14 +68,14 @@ public class EmployeeController {
             //Obtenga toda la información de los empleados
             ObservableList<Employee> empData = EmployeeDAO.searchEmployees();
             if (empData.isEmpty()){
-                resultArea.setText("Base de datos vacia");
+                resultArea.setText("Base de datos vacía");
             }else{
                 //Rellenar empleados TableView
                 populateEmployees(empData);
             }
 
         } catch (SQLException e){
-            System.out.println("Error occurred while getting employees information from DB.\n" + e);
+            System.out.println("Ha ocurrido un error al obtener la información de los empleados desde la BBDD.\n" + e);
             throw e;
         }
     }
@@ -113,8 +113,8 @@ public class EmployeeController {
     //Establecer la información de Employee en el Text Area
     @FXML
     private void setEmpInfoToTextArea ( Employee emp) {
-        resultArea.setText("First Name: " + emp.getFirstName() + "\n" +
-                "Last Name: " + emp.getLastName());
+        resultArea.setText("Nombre: " + emp.getFirstName() + "\n" +
+                "Apellido: " + emp.getLastName());
     }
     //Rellenar Employee para el TableView y mostrar Employee en el TextArea
     @FXML
@@ -123,7 +123,7 @@ public class EmployeeController {
             populateEmployee(emp);
             setEmpInfoToTextArea(emp);
         } else {
-            resultArea.setText("This employee does not exist!\n");
+            resultArea.setText("¡Este empleado no existe!\n");
         }
     }
     //Rellenar empleados para TableView
@@ -137,9 +137,9 @@ public class EmployeeController {
     private void updateEmployeeEmail (ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         try {
             EmployeeDAO.updateEmpEmail(empIdText.getText(),newEmailText.getText());
-            resultArea.setText("Email has been updated for, employee id: " + empIdText.getText() + "\n");
+            resultArea.setText("Email ha sido actualizado, id: " + empIdText.getText() + "\n");
         } catch (SQLException e) {
-            resultArea.setText("Problem occurred while updating email: " + e);
+            resultArea.setText("Ha ocurrido un error al actualizar el email del empleado: " + e);
         }
     }
     //Insertar empleado en la base de datos
@@ -150,11 +150,11 @@ public class EmployeeController {
                 resultArea.setText("Falta por rellenar un campo");
             }else{
                 EmployeeDAO.insertEmp(nameText.getText(),surnameText.getText(),emailText.getText());
-                resultArea.setText("Employee inserted! \n");
+                resultArea.setText("¡Empleado insertado! \n");
             }
 
         } catch (SQLException e) {
-            resultArea.setText("Problem occurred while inserting employee " + e);
+            resultArea.setText("Ha ocurrido un error al insertar el empleado:" + e);
             throw e;
         }
     }
@@ -162,11 +162,12 @@ public class EmployeeController {
     @FXML
     private void deleteEmployee (ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         try {
-            //TODO borrar por fila marcada
-            EmployeeDAO.deleteEmpWithId(empIdText.getText());
-            resultArea.setText("Employee deleted! Employee id: " + empIdText.getText() + "\n");
+            Employee selectedItem = (Employee) employeeTable.getSelectionModel().getSelectedItem();
+            employeeTable.getItems().remove(selectedItem);
+            EmployeeDAO.deleteEmpWithId(String.valueOf(selectedItem.getEmployeeId()));
+            resultArea.setText("¡Empleado eliminado! Id del empleado: " + empIdText.getText() + "\n");
         } catch (SQLException e) {
-            resultArea.setText("Problem occurred while deleting employee " + e);
+            resultArea.setText("Ha ocurrido un error al eliminar el empleado: " + e);
             throw e;
         }
     }
