@@ -12,7 +12,7 @@ public class EmployeeDAO {
     //*******************************
     public static Employee searchEmployee (String empId) throws SQLException, ClassNotFoundException {
         //Declara la sentencia SELECT
-        String selectStmt = "SELECT * FROM employees WHERE employee_id="+empId;
+        String selectStmt = "SELECT * FROM employees WHERE employee_id=" + empId;
         //Ejecuta la sentencia SELECT
         try {
             //Obtener ResultSet del método dbExecuteQuery
@@ -22,7 +22,7 @@ public class EmployeeDAO {
             //Retornar el objeto empleado
             return employee;
         } catch (SQLException e) {
-            System.out.println("While searching an employee with " + empId + " id, an error occurred: " + e);
+            System.out.println("Mientras se buscaba un empleado con el id " + empId + ", se produjo un error: " + e);
             //Retorna la excepción
             throw e;
         }
@@ -62,11 +62,12 @@ public class EmployeeDAO {
             //Retorna el Objeto empleado
             return empList;
         } catch (SQLException e) {
-            System.out.println("SQL select operation has been failed: " + e);
+            System.out.println("La sentencia SQL ha fallado: " + e);
             //Retorna una excepción
             throw e;
         }
     }
+
     //Seleccione * de la operación empleados
     private static ObservableList<Employee> getEmployeeList(ResultSet rs) throws SQLException, ClassNotFoundException {
         //Declarar la ObservableList que comprende los objetos Empleados
@@ -96,17 +97,14 @@ public class EmployeeDAO {
     public static void updateEmpEmail (String empId, String empEmail) throws SQLException, ClassNotFoundException {
         //Declara un UPDATE
         String updateStmt =
-                "BEGIN\n" +
-                        "   UPDATE employees\n" +
-                        "      SET EMAIL = '" + empEmail + "'\n" +
-                        "    WHERE EMPLOYEE_ID = " + empId + ";\n" +
-                        "   COMMIT;\n" +
-                        "END;";
+            "UPDATE employees " +
+            "SET EMAIL = '" + empEmail + "' " +
+            "WHERE EMPLOYEE_ID = " + empId + ";";
         //Ejecuta la operación UPDATE
         try {
             DBUtil.dbExecuteUpdate(updateStmt);
         } catch (SQLException e) {
-            System.out.print("Error occurred while UPDATE Operation: " + e);
+            System.out.println("Error mientras se hacía la operación UPDATE: " + e);
             throw e;
         }
     }
@@ -116,16 +114,14 @@ public class EmployeeDAO {
     public static void deleteEmpWithId (String empId) throws SQLException, ClassNotFoundException {
         //Declara la operación DELETE
         String updateStmt =
-                "BEGIN\n" +
-                        "   DELETE FROM employees\n" +
-                        "         WHERE employee_id ="+ empId +";\n" +
-                        "   COMMIT;\n" +
-                        "END;";
+            "DELETE FROM employees " +
+            "WHERE employee_id = "
+            + empId + ";";
         //Ejecuta la operación UPDATE
         try {
             DBUtil.dbExecuteUpdate(updateStmt);
         } catch (SQLException e) {
-            System.out.print("Error occurred while DELETE Operation: " + e);
+            System.out.println("Error mientras se hacía la operación DELETE: " + e);
             throw e;
         }
     }
@@ -135,17 +131,16 @@ public class EmployeeDAO {
     public static void insertEmp (String name, String lastname, String email) throws SQLException, ClassNotFoundException {
         //Declara una operación INSERT
         String updateStmt =
-                "BEGIN\n" +
-                        "INSERT INTO employees\n" +
-                        "(EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, HIRE_DATE, JOB_ID)\n" +
-                        "VALUES\n" +
-                        "(sequence_employee.nextval, '"+name+"', '"+lastname+"','"+email+"', SYSDATE, 'IT_PROG');\n" +
-                        "END;";
+            "INSERT INTO employees " +
+            "(EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, HIRE_DATE, JOB_ID) " +
+            "VALUES " +
+            "(sequence_employee.nextval, '" + name + "', '"
+                    + lastname + "', '" + email + "', SYSDATE, 'IT_PROG');";
         //Ejecuta la operación UPDATE
         try {
             DBUtil.dbExecuteUpdate(updateStmt);
         } catch (SQLException e) {
-            System.out.print("Error occurred while DELETE Operation: " + e);
+            System.out.println("Error mientras se hacía la operación INSERT: " + e);
             throw e;
         }
     }
