@@ -3,6 +3,7 @@ package dam.proyectoempleados;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -22,6 +23,8 @@ public class Main extends Application {
         this.primaryStage = primaryStage;
         //Establecemos título de la aplicación
         this.primaryStage.setTitle("Gestión empleados");
+        //introducimos un logo
+        primaryStage.getIcons().add(new Image("file:src/main/resources/dam/proyectoempleados/images/recursos-humanos.png"));
         //2) Método que inicia el root-layout
         initRootLayout();
         //3) Mostramos, sobre el root-layout, la  vista de las operaciones de empleados

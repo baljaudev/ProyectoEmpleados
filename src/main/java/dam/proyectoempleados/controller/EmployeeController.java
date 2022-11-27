@@ -162,8 +162,10 @@ public class EmployeeController {
     @FXML
     private void deleteEmployee (ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         try {
+            //seleccionamos un empleado de la tabla para que lo borre visualmente
             Employee selectedItem = (Employee) employeeTable.getSelectionModel().getSelectedItem();
             employeeTable.getItems().remove(selectedItem);
+            //le decimos que borre un empleado con el metodo proveniente de EmployeeDAO cogiendo el id de la tabla
             EmployeeDAO.deleteEmpWithId(String.valueOf(selectedItem.getEmployeeId()));
             resultArea.setText("¡Empleado eliminado! Id del empleado: " + empIdText.getText() + "\n");
         } catch (SQLException e) {
