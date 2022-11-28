@@ -130,14 +130,14 @@ public class EmployeeDAO {
     //*************************************
     //INSERT empleado
     //*************************************
-    public static void insertEmp (String name, String lastname, String email) throws SQLException, ClassNotFoundException {
+    public static void insertEmp(String name, String lastname, String email, String phone, String salary, String commission) throws SQLException, ClassNotFoundException {
         //Declara una operación INSERT
         String updateStmt =
             "INSERT INTO employees " +
-            "(FIRST_NAME, LAST_NAME, EMAIL, HIRE_DATE, JOB_ID) " +
+            "(FIRST_NAME, LAST_NAME, EMAIL,PHONE_NUMBER, HIRE_DATE, JOB_ID, SALARY, COMMISSION_PCT,DEPARTMENT_ID) " +
             "VALUES " +
             "('" + name + "', '"
-                    + lastname + "', '" + email + "', DATE(), 'IT_PROG');";
+                    + lastname + "', '" + email + "','" + phone + "', DATE(), 'IT_PROG'," + salary + "," + commission + ",12);";
         //Ejecuta la operación UPDATE
         try {
             DBUtil.dbExecuteUpdate(updateStmt);

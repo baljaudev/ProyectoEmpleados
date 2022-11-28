@@ -164,7 +164,7 @@ public class EmployeeController {
                     phoneText.getText().isBlank() || salaryText.getText().isBlank() || commissionText.getText().isBlank()) {
                 resultArea.setText("Falta por rellenar un campo");
             }else{
-                EmployeeDAO.insertEmp(nameText.getText(),surnameText.getText(),emailText.getText());
+                EmployeeDAO.insertEmp(nameText.getText(),surnameText.getText(),emailText.getText(),phoneText.getText(),salaryText.getText(),commissionText.getText());
                 resultArea.setText("¡Empleado insertado! \n");
             }
 
