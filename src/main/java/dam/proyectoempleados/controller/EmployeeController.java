@@ -28,6 +28,12 @@ public class EmployeeController {
     @FXML
     private TextField emailText;
     @FXML
+    public TextField phoneText;
+    @FXML
+    public TextField salaryText;
+    @FXML
+    public TextField commissionText;
+    @FXML
     private TableView employeeTable;
     @FXML
     private TableColumn<Employee, Integer>  empIdColumn;
@@ -41,6 +47,10 @@ public class EmployeeController {
     private TableColumn<Employee, String> empPhoneNumberColumn;
     @FXML
     private TableColumn<Employee, Date> empHireDateColumn;
+    @FXML
+    private TableColumn<Employee, Integer> empSalaryColumn;
+    @FXML
+    private TableColumn<Employee, Double> empCommissionColumn;
     //Buscar empleado
     @FXML
     private void searchEmployee (ActionEvent actionEvent) throws ClassNotFoundException, SQLException, ParseException {
@@ -100,6 +110,9 @@ public class EmployeeController {
         empEmailColumn.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
         empPhoneNumberColumn.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
         empHireDateColumn.setCellValueFactory(cellData -> cellData.getValue().hireDateProperty());
+        empSalaryColumn.setCellValueFactory(cellData -> cellData.getValue().salaryProperty().asObject());
+        empCommissionColumn.setCellValueFactory(cellData -> cellData.getValue().commissionPctProperty().asObject());
+
     }
     //Introducir Employee
     @FXML
@@ -147,7 +160,8 @@ public class EmployeeController {
     @FXML
     private void insertEmployee (ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         try {
-            if (nameText.getText().isBlank() || surnameText.getText().isBlank() || emailText.getText().isBlank()) {
+            if (nameText.getText().isBlank() || surnameText.getText().isBlank() || emailText.getText().isBlank() ||
+                    phoneText.getText().isBlank() || salaryText.getText().isBlank() || commissionText.getText().isBlank()) {
                 resultArea.setText("Falta por rellenar un campo");
             }else{
                 EmployeeDAO.insertEmp(nameText.getText(),surnameText.getText(),emailText.getText());
