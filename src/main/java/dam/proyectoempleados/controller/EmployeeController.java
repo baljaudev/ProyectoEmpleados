@@ -12,6 +12,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.ParseException;
 
 public class EmployeeController {
     @FXML
@@ -42,7 +43,7 @@ public class EmployeeController {
     private TableColumn<Employee, Date> empHireDateColumn;
     //Buscar empleado
     @FXML
-    private void searchEmployee (ActionEvent actionEvent) throws ClassNotFoundException, SQLException {
+    private void searchEmployee (ActionEvent actionEvent) throws ClassNotFoundException, SQLException, ParseException {
         try {
             //Obtener información de Employee
 

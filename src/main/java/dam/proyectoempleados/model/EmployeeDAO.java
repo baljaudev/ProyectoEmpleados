@@ -3,14 +3,17 @@ package dam.proyectoempleados.model;
 import dam.proyectoempleados.util.DBUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 
 public class EmployeeDAO {
     //*******************************
     //Selecciona un empleado
     //*******************************
-    public static Employee searchEmployee (String empId) throws SQLException, ClassNotFoundException {
+    public static Employee searchEmployee (String empId) throws SQLException, ClassNotFoundException, ParseException {
         //Declara la sentencia SELECT
         String selectStmt = "SELECT * FROM employees WHERE employee_id=" + empId;
         //Ejecuta la sentencia SELECT
@@ -28,8 +31,7 @@ public class EmployeeDAO {
         }
     }
     //Utiliza el ResultSet de la BD como parámetro y establece los atributos del objeto empleado y devuelve el objeto empleado.
-    private static Employee getEmployeeFromResultSet(ResultSet rs) throws SQLException
-    {
+    private static Employee getEmployeeFromResultSet(ResultSet rs) throws SQLException, ParseException {
         Employee emp = null;
         if (rs.next()) {
             emp = new Employee();
@@ -38,7 +40,7 @@ public class EmployeeDAO {
             emp.setLastName(rs.getString("LAST_NAME"));
             emp.setEmail(rs.getString("EMAIL"));
             emp.setPhoneNumber(rs.getString("PHONE_NUMBER"));
-            emp.setHireDate(rs.getDate("HIRE_DATE"));
+            emp.setHireDate(Date.valueOf(rs.getString("HIRE_DATE")));
             emp.setJobId(rs.getString("JOB_ID"));
             emp.setSalary(rs.getInt("SALARY"));
             emp.setCommissionPct(rs.getDouble("COMMISSION_PCT"));
@@ -79,7 +81,7 @@ public class EmployeeDAO {
             emp.setLastName(rs.getString("LAST_NAME"));
             emp.setEmail(rs.getString("EMAIL"));
             emp.setPhoneNumber(rs.getString("PHONE_NUMBER"));
-            emp.setHireDate(rs.getDate("HIRE_DATE"));
+            emp.setHireDate(Date.valueOf(rs.getString("HIRE_DATE")));
             emp.setJobId(rs.getString("JOB_ID"));
             emp.setSalary(rs.getInt("SALARY"));
             emp.setCommissionPct(rs.getDouble("COMMISSION_PCT"));
@@ -116,7 +118,7 @@ public class EmployeeDAO {
         String updateStmt =
             "DELETE FROM employees " +
             "WHERE employee_id = "
-            + empId + ";";
+            + empId;
         //Ejecuta la operación UPDATE
         try {
             DBUtil.dbExecuteUpdate(updateStmt);
@@ -132,10 +134,10 @@ public class EmployeeDAO {
         //Declara una operación INSERT
         String updateStmt =
             "INSERT INTO employees " +
-            "(EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, HIRE_DATE, JOB_ID) " +
+            "(FIRST_NAME, LAST_NAME, EMAIL, HIRE_DATE, JOB_ID) " +
             "VALUES " +
-            "(sequence_employee.nextval, '" + name + "', '"
-                    + lastname + "', '" + email + "', SYSDATE, 'IT_PROG');";
+            "('" + name + "', '"
+                    + lastname + "', '" + email + "', DATE(), 'IT_PROG');";
         //Ejecuta la operación UPDATE
         try {
             DBUtil.dbExecuteUpdate(updateStmt);

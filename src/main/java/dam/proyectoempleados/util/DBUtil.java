@@ -9,31 +9,16 @@ public class DBUtil {
     /**
      * Creado por ONUR BASKIRT el 22.02.2016.
      */
-        //Declaramos el driver JDBC.
-        private static final String JDBC_DRIVER = "oracle.jdbc.driver.OracleDriver";
-
         //Connection
         private static Connection conn = null;
 
         //Connection String
-        //String connStr = "jdbc:oracle:thin:Username/Password@IP:Port/SID";
-        //Username=HR, Password=HR, IP=localhost, IP=1521, SID=xe
-        private static final String connStr = "jdbc:oracle:thin:HR/HR@localhost:1521/xe";
+        private static final String connStr = "jdbc:sqlite:db.db";
 
         //Conectar a la base de datos.
         public static void dbConnect() throws SQLException, ClassNotFoundException {
-            //Configuramos el driver JDBC de Oracle.
-            try {
-                Class.forName(JDBC_DRIVER);
-            } catch (ClassNotFoundException e) {
-                System.out.println("Where is your Oracle JDBC Driver?");
-                e.printStackTrace();
-                throw e;
-            }
 
-            System.out.println("Oracle JDBC Driver Registered!");
-
-            //Establecemos la conexión con Oracle usando la cadena de conexión.
+            //Establecemos la conexión con SQLITE usando la cadena de conexión.
             try {
                 conn = DriverManager.getConnection(connStr);
             } catch (SQLException e) {
