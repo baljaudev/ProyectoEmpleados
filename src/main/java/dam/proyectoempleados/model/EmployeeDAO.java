@@ -11,7 +11,7 @@ import java.text.ParseException;
 
 public class EmployeeDAO {
     //*******************************
-    //Selecciona un empleado
+    //Selecciona un empleado (CUANDO DAMOS A SELECCIONASR UN EMPLEADO PONIENDO ID EN LA APLICACIÓN)
     //*******************************
     public static Employee searchEmployee (String empId) throws SQLException, ClassNotFoundException, ParseException {
         //Declara la sentencia SELECT
@@ -31,6 +31,7 @@ public class EmployeeDAO {
         }
     }
     //Utiliza el ResultSet de la BD como parámetro y establece los atributos del objeto empleado y devuelve el objeto empleado.
+    //PARA CARGAR UN SOLO EMPLEADO EN LA TABLA CUANDO LO SELECCIONAS EN LA APLICACIÓN
     private static Employee getEmployeeFromResultSet(ResultSet rs) throws SQLException, ParseException {
         Employee emp = null;
         if (rs.next()) {
@@ -50,7 +51,7 @@ public class EmployeeDAO {
         return emp;
     }
     //*******************************
-    //Selecciona empleados
+    //Selecciona empleados FUNCION MOSTRAR TODOS EN LA TABLA CUANDO EN LA APLICACIÓN MOSTRAMOS TODOS
     //*******************************
     public static ObservableList<Employee> searchEmployees () throws SQLException, ClassNotFoundException {
         //Declarar la sentencia SELECT
@@ -70,7 +71,7 @@ public class EmployeeDAO {
         }
     }
 
-    //Seleccione * de la operación empleados
+    //Seleccione * de la operación empleados CARGA LA TABLA DE LA APLICACIÓN CON TODOS LOS EMPLEADOS
     private static ObservableList<Employee> getEmployeeList(ResultSet rs) throws SQLException, ClassNotFoundException {
         //Declarar la ObservableList que comprende los objetos Empleados
         ObservableList<Employee> empList = FXCollections.observableArrayList();
