@@ -182,7 +182,7 @@ public class EmployeeController {
             employeeTable.getItems().remove(selectedItem);
             //le decimos que borre un empleado con el metodo proveniente de EmployeeDAO cogiendo el id de la tabla
             EmployeeDAO.deleteEmpWithId(String.valueOf(selectedItem.getEmployeeId()));
-            resultArea.setText("¡Empleado eliminado! Id del empleado: " + empIdText.getText() + "\n");
+            resultArea.setText("¡Empleado eliminado! Id del empleado: " + selectedItem.getEmployeeId() + "\n");
         } catch (SQLException e) {
             resultArea.setText("Ha ocurrido un error al eliminar el empleado: " + e);
             throw e;
