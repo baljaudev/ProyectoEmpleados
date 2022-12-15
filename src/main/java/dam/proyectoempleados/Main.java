@@ -7,6 +7,8 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
+
 import java.io.IOException;
 
 //Clase 'main' que extiende de la clase 'Application'

@@ -1,18 +1,18 @@
 package dam.proyectoempleados.controller;
 
+import dam.proyectoempleados.Main;
 import dam.proyectoempleados.model.Employee;
 import dam.proyectoempleados.model.EmployeeDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.Optional;
 
 public class EmployeeController {
     @FXML
@@ -176,16 +176,41 @@ public class EmployeeController {
     //Borrar de la base de datos un empleado con un Id de empleado determinado
     @FXML
     private void deleteEmployee (ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        try {
-            //seleccionamos un empleado de la tabla para que lo borre visualmente
-            Employee selectedItem = (Employee) employeeTable.getSelectionModel().getSelectedItem();
-            employeeTable.getItems().remove(selectedItem);
-            //le decimos que borre un empleado con el metodo proveniente de EmployeeDAO cogiendo el id de la tabla
-            EmployeeDAO.deleteEmpWithId(String.valueOf(selectedItem.getEmployeeId()));
-            resultArea.setText("¡Empleado eliminado! Id del empleado: " + selectedItem.getEmployeeId() + "\n");
-        } catch (SQLException e) {
-            resultArea.setText("Ha ocurrido un error al eliminar el empleado: " + e);
-            throw e;
+        int selectedIndex = employeeTable.getSelectionModel().getSelectedIndex();
+
+        if (selectedIndex >= 0) {
+            //Mostramos la ventana emergente con el mensaje de confirmación para cerrar la aplicación:
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            //Título de la ventana emergente para cerrar la aplicación:
+            alert.setTitle("Delete person");
+            //Quita el título cabecera de la ventana:
+            alert.setHeaderText(null);
+            //Mensaje a mostrar en la ventana emergente de la aplicación:
+            alert.setContentText("¿Deseas borrar el empleado seleccionado?");
+            //Objeto para capturar el evento de si confirma el borrado de ventana o cancela:
+            Optional<ButtonType> result = alert.showAndWait();
+            //Si se ha pulsado el botón "Aceptar":
+            if (result.get() == ButtonType.OK) {
+                try {
+                    //seleccionamos un empleado de la tabla para que lo borre visualmente
+                    Employee selectedItem = (Employee) employeeTable.getSelectionModel().getSelectedItem();
+                    employeeTable.getItems().remove(selectedItem);
+                    //le decimos que borre un empleado con el metodo proveniente de EmployeeDAO cogiendo el id de la tabla
+                    EmployeeDAO.deleteEmpWithId(String.valueOf(selectedItem.getEmployeeId()));
+                    resultArea.setText("¡Empleado eliminado! Id del empleado: " + selectedItem.getEmployeeId() + "\n");
+                } catch (SQLException e) {
+                    resultArea.setText("Ha ocurrido un error al eliminar el empleado: " + e);
+                    throw e;
+                }
+            }
+
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No hay ningún elemento seleccionado");
+            alert.setHeaderText(null);
+            alert.setContentText("Por favor, selecciona el empleado que deseas eliminar");
+            alert.showAndWait();
         }
+
     }
 }
